@@ -11,14 +11,13 @@ export const refs = {
   form: document.querySelector('#search-form'),
   galerryContainer: document.querySelector('.gallery'),
   loadMoreBtn: document.querySelector('.load-more'),
-  btnScroll: document.querySelector('.btn-scroll'),
-
+  // btnScroll: document.querySelector('.btn-scroll'),
 };
 
 const imagesApiService = new ImagesApiService();
 
 refs.loadMoreBtn.style.visibility = "hidden";
-refs.btnScroll.style.visibility = "hidden";
+// refs.btnScroll.style.visibility = "hidden";
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
@@ -48,7 +47,7 @@ async function onFormSubmit(evt) {
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
     refs.loadMoreBtn.style.visibility = "visible";
     // refs.btnScroll.style.visibility = "visible";
-    onLightboxCall();
+    lightbox.refresh();
     return;
   }
 }
@@ -63,20 +62,20 @@ async function onLoadMore () {
     Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
   }
   createGalleryMarkup(hits);
-  onLightboxCall();
+  // onBtnScroll();
+  lightbox.refresh();
 }
 
 function clearGalleryContainer() {
   refs.galerryContainer.innerHTML = '';
 }
 
-function onLightboxCall() {
   const lightbox = new SimpleLightbox('.gallery a', { 
     // captionsData: 'alt',
     captionDelay: 250,
     spinner: true,
-  }).refresh();
-}
+  });
+
 
 // function onBtnScroll(){
 //   const { height: cardHeight } = document
